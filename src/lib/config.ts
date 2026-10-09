@@ -1,7 +1,7 @@
 /** museum.config.json with its defaults filled in (scripts/config.mjs), inlined at build time by next.config.ts. */
 export interface MuseumConfig {
   instagram: { account: string; browser: string; downloads: string };
-  posts: { from: string | null; to: string | null };
+  posts: { from: string | null; to: string | null; order: "oldest-first" | "newest-first" };
   titles: { name: string; subtitle: string; pageTitle: string; description: string };
   look: { style: string; wall: string | null; ground: string | null; printCm: number; dateLocale: string };
   deploy: { remote: string; branch: string; basePath: string | null; cname: string | null };

@@ -1,6 +1,6 @@
 # Instagram museum
 
-Turn an Instagram account into a walkable 3D museum: every photo hangs on a gallery wall, oldest first, a run of
+Turn an Instagram account into a walkable 3D museum: every photo hangs on a gallery wall in date order, a run of
 rooms per year, with a sign giving its date and caption. Click a photo to see it up close, with a link to the
 post. The site is static, so it can be hosted free on GitHub Pages.
 
@@ -32,6 +32,7 @@ Kept out of git, like everything built from it. Every field except `instagram.ac
 | `instagram.browser` | `firefox` | The browser whose Instagram login gallery-dl uses (`chrome`, `edge`, ...) |
 | `instagram.downloads` | `downloads` | Where gallery-dl saves the posts (relative to this folder) |
 | `posts.from`, `posts.to` | `null` | Only posts between these dates (`YYYY-MM-DD`, both included) |
+| `posts.order` | `oldest-first` | The order of the rooms: `oldest-first`, or `newest-first` to start with the latest posts |
 | `titles.name` | `{fullname}` | On the entrance doors, the title card and every wall sign |
 | `titles.subtitle` | `Photographs · {years} · {count} photos` | The line under the name on the title card |
 | `titles.pageTitle` | `{fullname} · a walkable museum` | The browser tab's title |

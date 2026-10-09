@@ -7,7 +7,8 @@
   },
   "posts": {
     "from": "2015-01-01",
-    "to": "2019-12-03"
+    "to": "2019-12-03",
+    "order": "oldest-first"
   },
   "titles": {
     "name": "{fullname}",

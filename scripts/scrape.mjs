@@ -16,7 +16,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { loadConfig, ROOT, username } from "./config.mjs";
+import { flag, loadConfig, ROOT, username } from "./config.mjs";
 
 const DATA = path.join(ROOT, "data", "pictures.json");
 const PICTURES = path.join(ROOT, "public", "pictures");
@@ -135,5 +135,5 @@ export function scrape(config = loadConfig(), { offline = false } = {}) {
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-  scrape(loadConfig(), { offline: process.argv.includes("--offline") });
+  scrape(loadConfig(), { offline: flag("offline") });
 }

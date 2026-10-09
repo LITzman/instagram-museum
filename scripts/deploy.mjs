@@ -6,6 +6,8 @@
 //   npm run deploy -- --skip-scrape    use data/ and public/pictures/ as they are
 //   npm run deploy -- --no-push        stop after the build (the site is in out/)
 //
+// (the "--" can be left out: npm passes the flags on either way, see flag() in scripts/config.mjs)
+//
 // Reads museum.config.json (scripts/config.mjs). deploy.remote is a git remote of this repo (or a URL) and
 // deploy.branch the branch to publish to (gh-pages); in the repository's Settings > Pages, set the source to
 // "Deploy from a branch", that branch, folder / (root). The site is served at https://<user>.github.io/<repo>/,
@@ -17,12 +19,11 @@
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import { loadConfig, ROOT } from "./config.mjs";
+import { flag, loadConfig, ROOT } from "./config.mjs";
 import { scrape } from "./scrape.mjs";
 
 const OUT = path.join(ROOT, "out");
 const CACHE = path.join(ROOT, ".deploy");
-const args = new Set(process.argv.slice(2));
 
 function run(cmd, argv, opts = {}) {
   const r = spawnSync(cmd, argv, { stdio: "inherit", cwd: ROOT, ...opts });
@@ -54,10 +55,10 @@ function pagesOf(url) {
 
 const config = loadConfig();
 const d = config.deploy;
-const push = !args.has("--no-push");
+const push = !flag("no-push");
 
 // 1. the data
-if (!args.has("--skip-scrape")) scrape(config, { offline: args.has("--offline") });
+if (!flag("skip-scrape")) scrape(config, { offline: flag("offline") });
 
 // 2. where it will be served
 const url = remoteUrl(d.remote);

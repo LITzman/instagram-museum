@@ -301,6 +301,8 @@ export interface LayoutOptions {
   works?: WorkScale;
   /** Hang in the order given instead of by year (a custom room ordered by artist or by fame). */
   keepOrder?: boolean;
+  /** Newest first: the rooms and each room's works run back in time (the works and phases come in that order). */
+  newestFirst?: boolean;
   /** The room style's furniture to arrange in the rooms (furniture.ts furnishSizes); none when omitted. */
   furnish?: FurnishSizes;
   /** Wide arches between the rooms instead of doorways: on columns (a palace gallery), or plain. */
@@ -471,7 +473,7 @@ export function buildLayout(paintings: Painting[], opts: LayoutOptions = {}): Ga
   // toward the flagship walks forward in time. (Array.prototype.sort is
   // stable, so undated works keep their curated order at the end.)
   const rest = paintings.filter((_, i) => i !== anchorIdx);
-  if (!opts.keepOrder) rest.sort(byYear);
+  if (!opts.keepOrder) rest.sort(opts.newestFirst ? (a, b) => byYear(b, a) : byYear);
 
   // A big collection becomes a suite: chronological chapters of at most
   // ROOM_MAX works in rooms along one axis. The flagship closes the last

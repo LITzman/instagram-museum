@@ -98,6 +98,7 @@ export function MuseumApp({
     return buildLayout(artist.paintings, {
       works: theme.works,
       keepOrder: !!design?.keepOrder,
+      newestFirst: CONFIG.posts.order === "newest-first",
       furnish: furnishSizes(furnitureOf(theme)),
       arches: theme.room.arches,
       elevator: (design?.floors.length ?? 0) > 1,
@@ -764,12 +765,39 @@ export function MuseumApp({
 
       {canSettle && (
         <div className={styles.hudTools}>
-          <button type="button" className={styles.hudTool} onClick={openSettings} title="Speed, canvas surface, on-screen controls (O)">
-            <span aria-hidden>⚙</span> Settings{!touch && <kbd>O</kbd>}
+          {/* on phones only the icons show (the labels stay for screen readers), in the bottom corners */}
+          <button
+            type="button"
+            className={styles.hudTool}
+            onClick={openSettings}
+            title="Speed, canvas surface, on-screen controls (O)"
+            aria-label="Settings"
+          >
+            <span className={styles.hudToolIcon} aria-hidden>
+              ⚙
+            </span>
+            <span className={styles.hudToolLabel}>Settings</span>
+            {!touch && <kbd>O</kbd>}
           </button>
           {touch && (
-            <button type="button" className={styles.hudTool} onClick={() => setSettings({ hud: false })}>
-              Hide controls
+            <button
+              type="button"
+              className={styles.hudTool}
+              onClick={() => setSettings({ hud: false })}
+              title="Hide controls"
+              aria-label="Hide controls"
+            >
+              <svg className={styles.hudToolIcon} viewBox="0 0 24 24" aria-hidden focusable="false">
+                <path
+                  d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7-.4 1-1.3 2.4-2.6 3.7M6.1 6.1C4 7.5 2.6 9.6 2 12c1 2.5 5 7 10 7 1.9 0 3.6-.6 5-1.5M9.9 9.9a3 3 0 0 0 4.2 4.2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span className={styles.hudToolLabel}>Hide controls</span>
             </button>
           )}
         </div>

@@ -52,6 +52,10 @@ export const loadMuseum = cache(async () => {
     .filter((p) => (!from || p.date >= from) && (!to || p.date <= to))
     .sort((a, b) => a.date.localeCompare(b.date) || a.image_name.localeCompare(b.image_name));
   const years = [...new Set(sorted.map((p) => Number(p.date.slice(0, 4))))];
+  // the order the rooms run in: the photos, and the years that make the rooms (phases)
+  const newestFirst = CONFIG.posts.order === "newest-first";
+  const ordered = newestFirst ? [...sorted].reverse() : sorted;
+  const phases = newestFirst ? [...years].reverse() : years;
 
   const username = account?.username ?? "";
   const first = sorted[0]?.date ?? "";
@@ -71,7 +75,7 @@ export const loadMuseum = cache(async () => {
   const t = CONFIG.titles;
 
   const long = CONFIG.look.printCm;
-  const paintings: Painting[] = sorted.map((p) => {
+  const paintings: Painting[] = ordered.map((p) => {
     const year = Number(p.date.slice(0, 4));
     const description = p.description.trim();
     const landscape = p.width >= p.height;
@@ -89,7 +93,7 @@ export const loadMuseum = cache(async () => {
       facts: [],
       wikipediaUrl: null,
       postUrl: p.url ?? null,
-      phase: years.indexOf(year),
+      phase: phases.indexOf(year),
     };
   });
 
@@ -109,7 +113,7 @@ export const loadMuseum = cache(async () => {
     wikipediaUrl: null,
     paintingCount: paintings.length,
     paintings,
-    phases: years.map((y) => ({ name: String(y), from: y, to: y })),
+    phases: phases.map((y) => ({ name: String(y), from: y, to: y })),
   };
   return { museum, pageTitle: fillTitle(t.pageTitle, values), description: fillTitle(t.description, values) };
 });

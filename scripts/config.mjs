@@ -15,8 +15,13 @@ const DEFAULTS = {
     /** Where gallery-dl downloads to (it makes <downloads>/instagram/<username>/ inside). */
     downloads: "downloads",
   },
-  /** Only posts from / to these dates (YYYY-MM-DD, both included); null: no limit. */
-  posts: { from: null, to: null },
+  posts: {
+    /** Only posts from / to these dates (YYYY-MM-DD, both included); null: no limit. */
+    from: null,
+    to: null,
+    /** The order of the rooms: "oldest-first" walks forward in time, "newest-first" starts with the latest posts. */
+    order: "oldest-first",
+  },
   /** The museum's wording. Placeholders: {username} {fullname} {count} {from} {to} {firstYear} {lastYear} {years}. */
   titles: {
     /** On the entrance doors, the title card at the top and every wall sign. */
@@ -68,6 +73,16 @@ export function loadConfig(file = configFile()) {
   const raw = JSON.parse(fs.readFileSync(file, "utf8"));
   delete raw.$comment;
   return merge(DEFAULTS, raw);
+}
+
+/** A command-line flag ("offline" for --offline). `npm run deploy -- --offline` hands it to the script; npm keeps
+ *  a flag given without the "--" (`npm run deploy --offline`) and passes it on as npm_config_offline=true (a
+ *  --no-x flag as npm_config_x=false), so both forms count. */
+export function flag(name) {
+  if (process.argv.includes(`--${name}`)) return true;
+  const env = (n) => process.env[`npm_config_${n.replace(/-/g, "_")}`];
+  if (env(name) === "true") return true;
+  return name.startsWith("no-") && env(name.slice(3)) === "false";
 }
 
 /** "https://www.instagram.com/some_user/" or "@some_user" -> "some_user". */
