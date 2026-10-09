@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Your museum: its config, the downloads and what is built from them. Only the code is shared.
+museum.config.json
+downloads/
+data/
+public/pictures/
+.deploy/
