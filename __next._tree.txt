@@ -3,4 +3,4 @@
 :HL["/instagram-museum/_next/static/media/818557234a132319.p.114t4_ovivqo2.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/instagram-museum/_next/static/media/dc6d2a64e9dbf3bc.p.3mjzw95c0-_52.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/instagram-museum/_next/static/chunks/2dq0n510aviqb.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"4o-LKXJZZuv31XPXVqSke"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"Xkdyqd9ltOqxqNywwFJHu"}
